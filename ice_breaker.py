@@ -1,6 +1,7 @@
 from langchain import PromptTemplate
 from langchain.chat_models import ChatOpenAI
 from langchain.chains import LLMChain
+from third_parties.linkedin import scrape_linkedin_profile
 
 information = """
 John Christopher Depp II (born June 9, 1963) is an American actor. He is the recipient of multiple accolades, including a Golden Globe Award and a Screen Actors Guild Award, and has been nominated for three Academy Awards and two BAFTA awards.
@@ -17,6 +18,9 @@ Between 1998 and 2012, Depp was in a relationship with the French singer Vanessa
 if __name__ == "__main__":
     print("Hello langchain!")
 
+    linkedin_data = scrape_linkedin_profile("some_linkedin_url")
+    # print(linkedin_data)
+
     summary_template = """
         given the information {information} about a person from I want you to create:
         1. a short summary
@@ -31,4 +35,5 @@ if __name__ == "__main__":
 
     chain = LLMChain(llm=llm, prompt=summary_prompt_template)
 
-    print(chain.run(information=information))
+    print(chain.run(information=linkedin_data))
+
